@@ -2,6 +2,8 @@ import React from 'react';
 import ThoughtList from '../components/ThoughtList';
 import ThoughtForm from '../components/ThoughtForm';
 import FriendList from '../components/FriendList';
+import BrewList from '../components/BrewList';
+
 
 import Auth from '../utils/auth';
 import { useQuery } from '@apollo/client';
@@ -26,10 +28,7 @@ const Home = () => {
           {loading ? (
             <div>Loading...</div>
           ) : (
-            <ThoughtList
-              thoughts={thoughts}
-              title="Some Feed for Thought(s)..."
-            />
+            <BrewList/>
           )}
         </div>
         {loggedIn && userData ? (
