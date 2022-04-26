@@ -1,13 +1,19 @@
-// Import React and Bootstrap
-import React, { useState } from 'react';
+// Import React and Bootstrap and external modukes
+import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
-
-// Import API Queries from utils to get data
+import { useMutation } from '@apollo/react-hooks'
+// Import needed Utils
 import { fetchBreweries } from '../../utils/API';
+import { saveBrewIds, getSavedBrewIds } from '../../utils/localStorage';
+
+// CHANGE THIS OUT FOR MUTATION 
+const SAVE_BREW = console.log(' Save Brewery Mutation ')
 
 const BrewList = () => {
     // Set State to pass props for data population and card creation
     const [ breweryState, setBreweryState ] = useState([]);
+    // create state for holding our search field data
+    const [searchInput, setSearchInput] = useState('');
     
     // Get All Breweries
     const getBreweryData = async (event) => {
@@ -16,7 +22,8 @@ const BrewList = () => {
 
         try {
             // send request, get response, format data for card creation
-            const breweries = await fetchBreweries();
+            // query logic based on search input in utils/API
+            const breweries = await fetchBreweries(searchInput);
             const breweryData = breweries.map((brew) => ({
                 id: brew.id,
                 name: brew.name,
@@ -42,6 +49,16 @@ const BrewList = () => {
                     <h1>Search for breweries!</h1>
                     <Form onSubmit={getBreweryData}>
                         <Form.Row>
+                            <Col xs={12} md={8}>
+                                <Form.Control
+                                name='searchInput'
+                                value={searchInput}
+                                onChange={(e) => setSearchInput(e.target.value)}
+                                type='text'
+                                size='lg'
+                                placeholder='Search for breweries'
+                                />
+                            </Col>
                             <Col xs={12} md={4}>
                                 <Button type='submit' variant='success' size='lg'>
                                     Submit Search
@@ -63,7 +80,7 @@ const BrewList = () => {
                     {/* Create a card for each brewery */}
                     {breweryState.map((brew) => {
                         return (
-                            <Card key={brew.id} border='dark'>
+                            <Card key={brew.id} id={brew.id} border='dark'>
                                 <Card.Body>
                                     <Card.Title>{brew.name}</Card.Title>
                                     <Card.Text>{brew.type}</Card.Text>
