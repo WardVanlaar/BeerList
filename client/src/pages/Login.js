@@ -40,14 +40,14 @@ const Login = (props) => {
   };
 
   return (
-    <main className="flex-row justify-center mb-4">
+    <main className="flex-row justify-center mb-4 my-5">
       <div className="col-12 col-md-6">
         <div className="card mt-5">
-          <h4 className="card-header">Login</h4>
+          <h4 className="card-header font-link text-center">Login</h4>
           <div className="card-body">
             <form onSubmit={handleFormSubmit}>
               <input
-                className="form-input"
+                className="form-input font-link"
                 placeholder="Your email"
                 name="email"
                 type="email"

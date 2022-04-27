@@ -1,6 +1,6 @@
 // Import React and Bootstrap
 import React, { useState } from 'react';
-import { Jumbotron, Container, Col, Form, Button, Card, CardColumns, CardGroup, Row } from 'react-bootstrap';
+import { Jumbotron, Container, Col, Form, Button, Card, FormControl, CardGroup, Row } from 'react-bootstrap';
 
 
 
@@ -41,8 +41,8 @@ const BrewList = () => {
             <Jumbotron fluid className='text-light bg-dark'>
                 {/* Search Bar and Buttons */}
                 <Container>
-                    <h1>Search for breweries!</h1>
-                    <Form onSubmit={getBreweryData}>
+                    <h1 className='font-link text-center my-2'>Search for breweries In:</h1>
+                    {/* <Form onSubmit={getBreweryData}>
                         <Form.Row>
                             <Col xs={12} md={4}>
                                 <Button type='submit' variant='success' size='lg'>
@@ -50,39 +50,50 @@ const BrewList = () => {
                                 </Button>
                             </Col>
                         </Form.Row>
+                    </Form> */}
+                    <Form.Label column="lg" lg={2}>
+                    <Form className="d-flex" onSubmit={getBreweryData}>
+                        <FormControl
+                        type="search"
+                        placeholder="California"
+                        className="me-2"
+                        aria-label="Search"
+                        size ="lg"
+                        />
+                        <Button type='submit' variant="outline-success">Search</Button>
                     </Form>
+                    </Form.Label>
                 </Container>
             </Jumbotron>
 
             {/* Card Holder */}
             <Container>
+                <Row xs={1} md={4} className="g-4">
                 <h2>
                     {breweryState.length
                         ? `Viewing ${breweryState.length} results:`
                         : 'Search for a book to begin'}
                 </h2>
-                <CardColumns>
+
                     {/* Create a card for each brewery */}
                     {breweryState.map((brew) => {
                         return (
-                            <Row xs={1} md={2} className="g-4">
-                                <Col sm>
-                                    <Card key={brew.id}>
-                            <Card.Img variant="top" src="holder.js/100px180" />
-                            <Card.Body>
-                                <Card.Title>Card Title</Card.Title>
-                                <Card.Text>{brew.type}</Card.Text>
-                                <Card.Text>{brew.city}</Card.Text>
-                                <Card.Text>{brew.state}</Card.Text>
-                                <Card.Text>{brew.web}</Card.Text>
-                                <Button variant="primary">Go somewhere</Button>
-                            </Card.Body>
-                                    </Card>
-                                </Col>
-                            </Row>
+                            <Col>
+                                <Card key={brew.id} style={{ width: '24rem' }} className="text-center">
+                                    <Card.Body>
+                                    <Card.Img variant="top" src="holder.js/100px180" />
+                                        <Card.Title>Card Title</Card.Title>
+                                        <Card.Text>Brewery Type:  {brew.type}</Card.Text>
+                                        <Card.Text>Brewery City:  {brew.city}</Card.Text>
+                                        <Card.Text>Brewery State:  {brew.state}</Card.Text>
+                                        <Card.Text>Brewery Site:  {brew.web}</Card.Text>
+                                        <Button variant="primary">Go somewhere</Button>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
                         );
                     })}
-                </CardColumns>
+                </Row>
             </Container>
         </>
     )
