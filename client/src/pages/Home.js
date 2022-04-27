@@ -7,7 +7,7 @@ import BrewList from '../components/BrewList';
 
 import Auth from '../utils/auth';
 import { useQuery } from '@apollo/client';
-import { QUERY_THOUGHTS, QUERY_ME_BASIC } from '../utils/queries';
+import { QUERY_ME_BASIC } from '../utils/queries';
 
 const Home = () => {
   // const { loading, data } = useQuery(QUERY_THOUGHTS);
@@ -25,11 +25,7 @@ const Home = () => {
           </div>
         )} */}
         <div className={`col-12 mb-3 ${loggedIn && 'col-lg-8'}`}>
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <BrewList/>
-          )}
+          <BrewList />
         </div>
         {loggedIn && userData ? (
           <div className="col-12 col-lg-3 mb-3">

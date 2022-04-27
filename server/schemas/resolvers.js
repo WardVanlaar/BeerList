@@ -30,10 +30,10 @@ const resolvers = {
     },
     breweries: async (parent, { username }) => {
       const params = username ? { username } : {};
-      return Thought.find(params).sort({ createdAt: -1 });
+      return Brewery.find(params).sort({ createdAt: -1 });
     },
     brewery: async (parent, { _id }) => {
-      return Thought.findOne({ _id });
+      return Brewery.findOne({ _id });
     }
   },
 
@@ -70,20 +70,20 @@ const resolvers = {
           { new: true }
         );
 
-        return thought;
+        return Brewery;
       }
 
       throw new AuthenticationError('You need to be logged in!');
     },
-    addReaction: async (parent, { thoughtId, reactionBody }, context) => {
+    addReaction: async (parent, { breweryId, reactionBody }, context) => {
       if (context.user) {
-        const updatedThought = await Thought.findOneAndUpdate(
-          { _id: thoughtId },
+        const updatedBrewery = await Brewery.findOneAndUpdate(
+          { _id: BreweryId },
           { $push: { reactions: { reactionBody, username: context.user.username } } },
           { new: true, runValidators: true }
         );
 
-        return updatedThought;
+        return updatedBrewery;
       }
 
       throw new AuthenticationError('You need to be logged in!');

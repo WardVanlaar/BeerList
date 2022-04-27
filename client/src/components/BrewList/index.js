@@ -5,15 +5,24 @@ import { useMutation } from '@apollo/react-hooks'
 // Import needed Utils
 import { fetchBreweries } from '../../utils/API';
 import { saveBrewIds, getSavedBrewIds } from '../../utils/localStorage';
+import { SAVE_BREWERY } from '../../utils/mutations';
+import Auth from '../../utils/auth'
 
-// CHANGE THIS OUT FOR MUTATION 
-const SAVE_BREW = console.log(' Save Brewery Mutation ')
 
 const BrewList = () => {
     // Set State to pass props for data population and card creation
     const [ breweryState, setBreweryState ] = useState([]);
     // create state for holding our search field data
     const [searchInput, setSearchInput] = useState('');
+
+    // Save Brewery to User functionality
+    const [savedBrewIds, setSavedBrewIds] = useState(getSavedBrewIds());
+    // add brewery to user through mutation
+    const [saveBrew, { error }] = useMutation(SAVE_BREWERY);
+
+    useEffect(() => {
+        return () => saveBrewIds(savedBrewIds);
+    });
     
     // Get All Breweries
     const getBreweryData = async (event) => {
@@ -25,7 +34,7 @@ const BrewList = () => {
             // query logic based on search input in utils/API
             const breweries = await fetchBreweries(searchInput);
             const breweryData = breweries.map((brew) => ({
-                id: brew.id,
+                brewId: brew.id,
                 name: brew.name,
                 type: brew.brewery_type,
                 city: brew.city,
@@ -37,6 +46,33 @@ const BrewList = () => {
             setBreweryState(breweryData);
         }catch (err) {
             console.error(err)
+        }
+    }
+
+    const handleSaveBrew = async (brewId) => {
+        const brewInput = breweryState.find((brew) => brew.id === brewId);
+
+        // get User Auth Token
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+        if (!token) {
+            return false;
+        }
+
+        try {
+            console.log(brewInput);
+            // Mutation, add Brewery to User
+            const { data } = await saveBrew({
+                variables: { input: brewInput }
+            });
+
+            if (error) {
+                throw new Error('something went wrong!');
+              }
+
+            // save book id to state if successfully saved to user
+            setSavedBrewIds([...savedBrewIds, brewInput.id])
+        } catch (err) {
+            console.error(err);
         }
     }
 
@@ -80,13 +116,23 @@ const BrewList = () => {
                     {/* Create a card for each brewery */}
                     {breweryState.map((brew) => {
                         return (
-                            <Card key={brew.id} id={brew.id} border='dark'>
+                            <Card key={brew.brewId} id={brew.brewId} border='dark'>
                                 <Card.Body>
                                     <Card.Title>{brew.name}</Card.Title>
                                     <Card.Text>{brew.type}</Card.Text>
                                     <Card.Text>{brew.city}</Card.Text>
                                     <Card.Text>{brew.state}</Card.Text>
                                     <Card.Text>{brew.web}</Card.Text>
+                                    {Auth.loggedIn() && (
+                                        <Button
+                                            disabled={savedBrewIds?.some((savedBrewId) => savedBrewId === brew.id)}
+                                            className='btn-block btn-info'
+                                            onClick={() => handleSaveBrew(brew.id)}>
+                                            {savedBrewIds?.some((savedBrewId) => savedBrewId === brew.id)
+                                                ? 'This brewery has been saved!'
+                                                : 'Save this brewery!'}
+                                        </Button>
+                                    )}
                                 </Card.Body>
                             </Card>
                         );

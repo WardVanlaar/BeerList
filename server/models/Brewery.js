@@ -4,6 +4,25 @@ const dateFormat = require('../utils/dateFormat');
 
 const brewerySchema = new Schema(
   {
+    brewId: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String
+    },
+    type: {
+      type: String
+    },
+    city: {
+      type: String
+    },
+    state: {
+      type: String
+    },
+    web: {
+      type: String
+    },
     reactions: [reactionSchema]
   },
   {
