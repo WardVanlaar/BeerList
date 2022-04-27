@@ -1,6 +1,8 @@
 // Import React and Bootstrap
 import React, { useState } from 'react';
-import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
+import { Jumbotron, Container, Col, Form, Button, Card, CardColumns, CardGroup, Row } from 'react-bootstrap';
+
+
 
 // Import API Queries from utils to get data
 import { fetchBreweries } from '../../utils/API';
@@ -63,15 +65,21 @@ const BrewList = () => {
                     {/* Create a card for each brewery */}
                     {breweryState.map((brew) => {
                         return (
-                            <Card key={brew.id} border='dark'>
-                                <Card.Body>
-                                    <Card.Title>{brew.name}</Card.Title>
-                                    <Card.Text>{brew.type}</Card.Text>
-                                    <Card.Text>{brew.city}</Card.Text>
-                                    <Card.Text>{brew.state}</Card.Text>
-                                    <Card.Text>{brew.web}</Card.Text>
-                                </Card.Body>
-                            </Card>
+                            <Row xs={1} md={2} className="g-4">
+                                <Col sm>
+                                    <Card key={brew.id}>
+                            <Card.Img variant="top" src="holder.js/100px180" />
+                            <Card.Body>
+                                <Card.Title>Card Title</Card.Title>
+                                <Card.Text>{brew.type}</Card.Text>
+                                <Card.Text>{brew.city}</Card.Text>
+                                <Card.Text>{brew.state}</Card.Text>
+                                <Card.Text>{brew.web}</Card.Text>
+                                <Button variant="primary">Go somewhere</Button>
+                            </Card.Body>
+                                    </Card>
+                                </Col>
+                            </Row>
                         );
                     })}
                 </CardColumns>
