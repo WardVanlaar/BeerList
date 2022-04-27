@@ -24,21 +24,6 @@ export const ADD_USER = gql`
   }
 `;
 
-export const ADD_THOUGHT = gql`
-  mutation addThought($thoughtText: String!) {
-    addThought(thoughtText: $thoughtText) {
-      _id
-      thoughtText
-      createdAt
-      username
-      reactionCount
-      reactions {
-        _id
-      }
-    }
-  }
-`;
-
 export const ADD_REACTION = gql`
   mutation addReaction($thoughtId: ID!, $reactionBody: String!) {
     addReaction(thoughtId: $thoughtId, reactionBody: $reactionBody) {
@@ -79,4 +64,40 @@ export const REMOVE_FRIEND = gql`
       }
     }
   }
+`;
+
+export const SAVE_BREWERY = gql`
+    mutation saveBrewery($input: breweryInput!) {
+        saveBrewery(input: $input) {
+            _id
+            username
+            email
+            savedBreweries {
+                name
+                brewery_type
+                city
+                state
+                website_url
+            }
+        }
+    }
+`;
+
+// mutation to remove books
+export const REMOVE_BREWERY = gql`
+    mutation removeBrewery($breweryId: String!) {
+        removeBrewery(breweryId: $breweryId) {
+            _id
+            username
+            email
+            bookCount
+            savedBooks {
+              name
+              brewery_type
+              city
+              state
+              website_url
+            }
+        }
+    }
 `;

@@ -10,10 +10,8 @@ const typeDefs = gql`
     friends: [User]
   }
 
-  type Thought {
+  type Brewery {
     _id: ID
-    thoughtText: String
-    createdAt: String
     username: String
     reactionCount: Int
     reactions: [Reaction]
@@ -35,14 +33,14 @@ const typeDefs = gql`
     me: User
     users: [User]
     user(username: String!): User
-    thoughts(username: String): [Thought]
-    thought(_id: ID!): Thought
+    breweries(username: String): [Brewery]
+    brewery(_id: ID!): Brewery
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    addThought(thoughtText: String!): Thought
+    addBrewery(breweryID: ID!): Brewery
     addReaction(thoughtId: ID!, reactionBody: String!): Thought
     addFriend(friendId: ID!): User
   }
