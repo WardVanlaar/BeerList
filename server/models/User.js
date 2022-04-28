@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
+const brewerySchema = require('./Brewery')
 
 const userSchema = new Schema(
   {
@@ -20,19 +21,13 @@ const userSchema = new Schema(
       required: true,
       minlength: 5
     },
-    breweries: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Brewery'
-      }
-    ],
+    breweries: [ brewerySchema ],
     friends: [
       {
         type: Schema.Types.ObjectId,
         ref: 'User'
       }
     ],
-    savedBreweries: [],
   },
   {
     toJSON: {

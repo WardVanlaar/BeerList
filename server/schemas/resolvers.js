@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Brewery } = require('../models');
+const { User, brewerySchema } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -30,10 +30,10 @@ const resolvers = {
     },
     breweries: async (parent, { username }) => {
       const params = username ? { username } : {};
-      return Brewery.find(params).sort({ createdAt: -1 });
+      return brewerySchema.find(params).sort({ createdAt: -1 });
     },
     brewery: async (parent, { _id }) => {
-      return Brewery.findOne({ _id });
+      return brewerySchema.findOne({ _id });
     }
   },
 
@@ -62,7 +62,9 @@ const resolvers = {
     },
     addBrewery: async (parent, args, context) => {
       if (context.user) {
-        const brewery = await Brewery.create({ ...args, username: context.user.username });
+        console.log('arguments below')
+        console.log(...args);
+        const brewery = await brewerySchema.create({ ...args, username: context.user.username });
 
         await User.findByIdAndUpdate(
           { _id: context.user._id },
@@ -70,14 +72,14 @@ const resolvers = {
           { new: true }
         );
 
-        return Brewery;
+        return brewerySchema;
       }
 
       throw new AuthenticationError('You need to be logged in!');
     },
     addReaction: async (parent, { breweryId, reactionBody }, context) => {
       if (context.user) {
-        const updatedBrewery = await Brewery.findOneAndUpdate(
+        const updatedBrewery = await brewerySchema.findOneAndUpdate(
           { _id: BreweryId },
           { $push: { reactions: { reactionBody, username: context.user.username } } },
           { new: true, runValidators: true }
