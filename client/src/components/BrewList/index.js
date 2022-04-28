@@ -1,6 +1,6 @@
 // Import React and Bootstrap
 import React, { useState } from 'react';
-import { Jumbotron, Container, Col, Form, Button, Card, FormControl, CardGroup, Row } from 'react-bootstrap';
+import { Jumbotron, Container, Col, Form, Button, Card, FormControl, CardGroup, Row, InputGroup, Image } from 'react-bootstrap';
 
 
 
@@ -42,17 +42,7 @@ const BrewList = () => {
                 {/* Search Bar and Buttons */}
                 <Container>
                     <h1 className='font-link text-center my-2'>Search for breweries In:</h1>
-                    {/* <Form onSubmit={getBreweryData}>
-                        <Form.Row>
-                            <Col xs={12} md={4}>
-                                <Button type='submit' variant='success' size='lg'>
-                                    Submit Search
-                                </Button>
-                            </Col>
-                        </Form.Row>
-                    </Form> */}
-                    <Form.Label column="lg" lg={2}>
-                    <Form className="d-flex" onSubmit={getBreweryData}>
+                    <Form className="d-flex text-center" onSubmit={getBreweryData}>
                         <FormControl
                         type="search"
                         placeholder="California"
@@ -62,34 +52,36 @@ const BrewList = () => {
                         />
                         <Button type='submit' variant="outline-success">Search</Button>
                     </Form>
-                    </Form.Label>
                 </Container>
             </Jumbotron>
 
             {/* Card Holder */}
             <Container>
-                <Row xs={1} md={4} className="g-4">
-                <h2>
+                <h2 className='my-5 text-center'>
                     {breweryState.length
-                        ? `Viewing ${breweryState.length} results:`
-                        : 'Search for a book to begin'}
+                        ? `Viewing ${breweryState.length} Breweries
+                        :`
+                        : 'Search for a place to begin'}
                 </h2>
 
                     {/* Create a card for each brewery */}
+                <Row>
                     {breweryState.map((brew) => {
                         return (
                             <Col>
-                                <Card key={brew.id} style={{ width: '24rem' }} className="text-center">
+                                <Card key={brew.id} className="text-center" >
                                     <Card.Body>
-                                    <Card.Img variant="top" src="holder.js/100px180" />
+                                        <Image
+                                        src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg"
+                                        rounded/>                                      
                                         <Card.Title>Card Title</Card.Title>
                                         <Card.Text>Brewery Type:  {brew.type}</Card.Text>
-                                        <Card.Text>Brewery City:  {brew.city}</Card.Text>
+                                        <Card.Text className='h2'>Brewery City:  {brew.city}</Card.Text>
                                         <Card.Text>Brewery State:  {brew.state}</Card.Text>
                                         <Card.Text>Brewery Site:  {brew.web}</Card.Text>
                                         <Button variant="primary">Go somewhere</Button>
                                     </Card.Body>
-                                </Card>
+                                </Card>   
                             </Col>
                         );
                     })}
