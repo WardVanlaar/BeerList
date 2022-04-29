@@ -1,20 +1,16 @@
+
 // Import React and Bootstrap
 import React, { useState } from 'react';
-import { Row } from 'react-bootstrap';
-import { Jumbotron, Container, Col, Form, Button, Card, CardColumns, CardGroup } from 'react-bootstrap';
-import styles from './brewlist.module.css';
+import { Jumbotron, Container, Col, Form, Button, Card, FormControl, Row, Image } from 'react-bootstrap';
 // Import API Queries from utils to get data
 import { fetchBreweries } from '../../utils/API';
-
 const BrewList = () => {
     // Set State to pass props for data population and card creation
     const [ breweryState, setBreweryState ] = useState([]);
-    
     // Get All Breweries
     const getBreweryData = async (event) => {
         // Set to wait for button press
         event.preventDefault();
-
         try {
             // send request, get response, format data for card creation
             const breweries = await fetchBreweries();
@@ -26,67 +22,63 @@ const BrewList = () => {
                 state: brew.state,
                 web: brew.website_url
             }));
-
             // Set state to our data to pass component props
             setBreweryState(breweryData);
         }catch (err) {
             console.error(err)
         }
     }
-
     // Return Component
     return (
         <>
             <Jumbotron fluid className='text-light bg-dark'>
                 {/* Search Bar and Buttons */}
                 <Container>
-                    <h1>Search for breweries!</h1>
-                    <Form onSubmit={getBreweryData}>
-                        <Form.Row>
-                            <Col xs={12} md={4}>
-                                <Button type='submit' variant='success' size='lg'>
-                                    Submit Search
-                                </Button>
-                            </Col>
-                        </Form.Row>
+                    <h1 className='font-link text-center my-2'>Search for breweries In:</h1>
+                    <Form className="d-flex text-center" onSubmit={getBreweryData}>
+                        <FormControl
+                        type="search"
+                        placeholder="California"
+                        className="me-2"
+                        aria-label="Search"
+                        size ="lg"
+                        />
+                        <Button type='submit' variant="outline-success">Search</Button>
                     </Form>
                 </Container>
             </Jumbotron>
-
             {/* Card Holder */}
             <Container>
-                <h2>
+                <h2 className='my-5 text-center'>
                     {breweryState.length
-                        ? `Viewing ${breweryState.length} results:`
-                        : 'Search for a brewery'}
+                        ? `Viewing ${breweryState.length} Breweries
+                        :`
+                        : 'Search for a place to begin'}
                 </h2>
-              
                     {/* Create a card for each brewery */}
-                    <Row>
+                <Row>
                     {breweryState.map((brew) => {
                         return (
-                            <div className={styles.brewlist_container} >
                             <Col>
-                            
-                            <Card key={brew.id} border='dark' width = "24rem">
-                                <Card.Body>
-                                    <Card.Title>{brew.name}</Card.Title>
-                                    <Card.Text>{brew.type}</Card.Text>
-                                    <Card.Text>{brew.city}</Card.Text>
-                                    <Card.Text>{brew.state}</Card.Text>
-                                    <Card.Text>{brew.web}</Card.Text>
-                                </Card.Body>
-                            </Card>
-                           
+                                <Card key={brew.id} className="text-center" >
+                                    <Card.Body>
+                                        <Image
+                                        src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg"
+                                        rounded/>
+                                        <Card.Title>Card Title</Card.Title>
+                                        <Card.Text>Brewery Type:  {brew.type}</Card.Text>
+                                        <Card.Text className='h2'>Brewery City:  {brew.city}</Card.Text>
+                                        <Card.Text>Brewery State:  {brew.state}</Card.Text>
+                                        <Card.Text>Brewery Site:  {brew.web}</Card.Text>
+                                        <Button variant="primary">Go somewhere</Button>
+                                    </Card.Body>
+                                </Card>
                             </Col>
-                            </div>
                         );
                     })}
-                    </Row>
-              
+                </Row>
             </Container>
         </>
     )
 };
-
 export default BrewList;
