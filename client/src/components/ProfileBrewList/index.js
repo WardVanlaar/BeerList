@@ -1,8 +1,9 @@
 import React from 'react';
-import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
+import { Container, Button, Card, CardColumns } from 'react-bootstrap';
 import { useMutation } from '@apollo/react-hooks'
 import { REMOVE_BREWERY } from '../../utils/mutations';
 import Auth from '../../utils/auth'
+import { removeBrewId } from '../../utils/localStorage';
 
 const BreweryList = ({ breweries }) => {
 
@@ -18,6 +19,7 @@ const BreweryList = ({ breweries }) => {
 
     try {
         // Mutation, add Brewery to User
+        removeBrewId(brewId)
         const { data } = await deleteBrew({
             variables: { brewId }
         });
