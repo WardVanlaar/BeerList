@@ -56,21 +56,21 @@ const BrewList = () => {
                         : 'Search for a place to begin'}
                 </h2>
                     {/* Create a card for each brewery */}
-                <Row>
+               <Row>
                     {breweryState.map((brew) => {
                         return (
                             <Col>
                                 <Card key={brew.id} className="text-center" >
                                     <Card.Body>
-                                        <Image
-                                        src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg"
+                                         <Image width="100%"
+                                        src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg" className = "card-img-top"
                                         rounded/>
                                         <Card.Title>Card Title</Card.Title>
                                         <Card.Text>Brewery Type:  {brew.type}</Card.Text>
                                         <Card.Text className='h2'>Brewery City:  {brew.city}</Card.Text>
                                         <Card.Text>Brewery State:  {brew.state}</Card.Text>
                                         <Card.Text>Brewery Site:  {brew.web}</Card.Text>
-                                        <Button variant="primary">Go somewhere</Button>
+                                        <Button variant="primary">Add to Profile</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>

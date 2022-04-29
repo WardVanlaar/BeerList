@@ -27,15 +27,28 @@ const Footer = () => {
   return (
       <div className={styles.footer_container}>
         <p>Copyright @ 2022 Brew Buddy.</p>
-        <p>Privacy Policy</p>
+        <p>Contact Us:</p>
         <a href='https://github.com/WardVanlaar/BrewBuddy'>
-          <i className='fab fa-github'></i>
-         
+          {/* <i className='fab fa-github'></i> */}
+          <img
+        src="/github.png"
+        width="20"
+        height="20"
+        className="d-inline-block align-top"
+        alt="Github"
+      />
         </a>
         <a href='https://www.linkedin.com/in/veeditparikh2211/'>
-          <i className='fab fa-linkedin'></i>
+          {/* <i className='fab fa-linkedin'></i> */}
+          <img
+        src="/linkedin.png"
+        width="20"
+        height="20"
+        className="d-inline-block align-top"
+        alt="Linkedin"
+      />
         </a>
-        <p>Terms of Use</p>
+       
         <p>United States</p>
       </div>
   );

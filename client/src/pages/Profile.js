@@ -1,19 +1,20 @@
 import React from 'react';
-import { Redirect, useParams } from 'react-router-dom';
-
-import ThoughtForm from '../components/ThoughtForm';
-import ThoughtList from '../components/ThoughtList';
-import FriendList from '../components/FriendList';
+import { Redirect, useParams, } from 'react-router-dom';
+import {  Col, Button, Card, Row, Image } from 'react-bootstrap';
+// import ThoughtForm from '../components/ThoughtForm';
+// import ThoughtList from '../components/ThoughtList';
+// import FriendList from '../components/FriendList';
 
 import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import { ADD_FRIEND } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { Container } from 'react-bootstrap';
 
 const Profile = (props) => {
   const { username: userParam } = useParams();
 
-  const [addFriend] = useMutation(ADD_FRIEND);
+  // const [addFriend] = useMutation(ADD_FRIEND);
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
@@ -38,48 +39,84 @@ const Profile = (props) => {
     );
   }
 
-  const handleClick = async () => {
-    try {
-      await addFriend({
-        variables: { id: user._id },
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  // const handleClick = async () => {
+  //   try {
+  //     await addFriend({
+  //       variables: { id: user._id },
+  //     });
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
 
   return (
-    <div>
-      <div className="flex-row mb-3">
-        <h2 className="bg-dark text-secondary p-3 display-inline-block">
-          Viewing {userParam ? `${user.username}'s` : 'your'} profile.
+    <div className="text-center">
+      
+        <h2 className="bg-dark text-secondary p-3 display-inline-block text-center" >
+          Viewing {userParam ? `${user.username}'s` : 'your'} saved Breweries.
         </h2>
 
-        {userParam && (
-          <button className="btn ml-auto" onClick={handleClick}>
-            Add Friend
-          </button>
-        )}
-      </div>
+        <div>
+      
+        <Container className="my-5">
 
-      <div className="flex-row justify-space-between mb-3">
-        <div className="col-12 mb-3 col-lg-8">
-          <ThoughtList
-            thoughts={user.thoughts}
-            title={`${user.username}'s thoughts...`}
-          />
-        </div>
-
-        <div className="col-12 col-lg-3 mb-3">
-          <FriendList
-            username={user.username}
-            friendCount={user.friendCount}
-            friends={user.friends}
-          />
-        </div>
+        <Row>
+                   
+                            <Col>
+                                <Card  className="text-center" >
+                                    <Card.Body>
+                                         <Image width="100%"
+                                        src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg" className = "card-img-top"
+                                        rounded/>
+                                        <Card.Title>Card Title</Card.Title>
+                                        <Card.Text>Brewery Type: </Card.Text>
+                                        <Card.Text className='h2'>Brewery City:  </Card.Text>
+                                        <Card.Text>Brewery State:  </Card.Text>
+                                        <Card.Text>Brewery Site:  </Card.Text>
+                                        
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                     
+                    
+                            <Col>
+                                <Card  className="text-center" >
+                                    <Card.Body>
+                                         <Image width="100%"
+                                        src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg" className = "card-img-top"
+                                        rounded/>
+                                        <Card.Title>Card Title</Card.Title>
+                                        <Card.Text>Brewery Type: </Card.Text>
+                                        <Card.Text className='h2'>Brewery City:  </Card.Text>
+                                        <Card.Text>Brewery State:  </Card.Text>
+                                        <Card.Text>Brewery Site:  </Card.Text>
+                                       
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                     
+                            <Col>
+                                <Card  className="text-center" >
+                                    <Card.Body>
+                                         <Image width="100%"
+                                        src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg" className = "card-img-top"
+                                        rounded/>
+                                        <Card.Title>Card Title</Card.Title>
+                                        <Card.Text>Brewery Type: </Card.Text>
+                                        <Card.Text className='h2'>Brewery City:  </Card.Text>
+                                        <Card.Text>Brewery State:  </Card.Text>
+                                        <Card.Text>Brewery Site:  </Card.Text>
+                                       
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                     
+                </Row>
+                </Container>
       </div>
-      {/* <div className="mb-3">{!userParam && <ThoughtForm />}</div> */}
     </div>
+    
+    
   );
 };
 
