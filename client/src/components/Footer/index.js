@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './footer.module.css';
 
+
+
 // const Footer = () => {
 //   return (
 //     <footer className="w-100 mt-auto bg-secondary p-4">

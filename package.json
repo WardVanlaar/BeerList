@@ -17,6 +17,7 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "@react-icons/all-files": "^4.1.0",
     "react-bootstrap": "^2.3.0"
   }

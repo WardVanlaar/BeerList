@@ -1,7 +1,8 @@
 // Import React and Bootstrap
 import React, { useState } from 'react';
+import { Row } from 'react-bootstrap';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns, CardGroup } from 'react-bootstrap';
-
+import styles from './brewlist.module.css';
 // Import API Queries from utils to get data
 import { fetchBreweries } from '../../utils/API';
 
@@ -59,12 +60,15 @@ const BrewList = () => {
                         ? `Viewing ${breweryState.length} results:`
                         : 'Search for a brewery'}
                 </h2>
-                <CardColumns>
+              
                     {/* Create a card for each brewery */}
+                    <Row>
                     {breweryState.map((brew) => {
                         return (
-                            <CardGroup >
-                            <Card key={brew.id} border='dark' width = "18rem">
+                            <div className={styles.brewlist_container} >
+                            <Col>
+                            
+                            <Card key={brew.id} border='dark' width = "24rem">
                                 <Card.Body>
                                     <Card.Title>{brew.name}</Card.Title>
                                     <Card.Text>{brew.type}</Card.Text>
@@ -73,10 +77,13 @@ const BrewList = () => {
                                     <Card.Text>{brew.web}</Card.Text>
                                 </Card.Body>
                             </Card>
-                            </CardGroup>
+                           
+                            </Col>
+                            </div>
                         );
                     })}
-                </CardColumns>
+                    </Row>
+              
             </Container>
         </>
     )

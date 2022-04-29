@@ -1,0 +1,11 @@
+
+
+.brewlist_container{
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+.card-columns{
+    display: flex;
+}
