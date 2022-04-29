@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/react-hooks'
 // Import needed Utils
 import { fetchBreweries } from '../../utils/API';
 import { saveBrewIds, getSavedBrewIds } from '../../utils/localStorage';
-import { SAVE_BREWERY } from '../../utils/mutations';
+import { ADD_BREWERY } from '../../utils/mutations';
 import Auth from '../../utils/auth'
 
 
@@ -18,7 +18,7 @@ const BrewList = () => {
     // Save Brewery to User functionality
     const [savedBrewIds, setSavedBrewIds] = useState(getSavedBrewIds());
     // add brewery to user through mutation
-    const [saveBrew, { error }] = useMutation(SAVE_BREWERY);
+    const [saveBrew, { error }] = useMutation(ADD_BREWERY);
 
     useEffect(() => {
         return () => saveBrewIds(savedBrewIds);
@@ -50,7 +50,7 @@ const BrewList = () => {
     }
 
     const handleSaveBrew = async (brewId) => {
-        const brewInput = breweryState.find((brew) => brew.id === brewId);
+        const brewInput = breweryState.find((brew) => brew.brewId === brewId);
 
         // get User Auth Token
         const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -59,7 +59,8 @@ const BrewList = () => {
         }
 
         try {
-            console.log(brewInput);
+            // save book id to state to change the save button
+            setSavedBrewIds([...savedBrewIds, brewInput.brewId])
             // Mutation, add Brewery to User
             const { data } = await saveBrew({
                 variables: { input: brewInput }
@@ -68,9 +69,6 @@ const BrewList = () => {
             if (error) {
                 throw new Error('something went wrong!');
               }
-
-            // save book id to state if successfully saved to user
-            setSavedBrewIds([...savedBrewIds, brewInput.id])
         } catch (err) {
             console.error(err);
         }
@@ -125,10 +123,10 @@ const BrewList = () => {
                                     <Card.Text>{brew.web}</Card.Text>
                                     {Auth.loggedIn() && (
                                         <Button
-                                            disabled={savedBrewIds?.some((savedBrewId) => savedBrewId === brew.id)}
+                                            disabled={savedBrewIds?.some((savedBrewId) => savedBrewId === brew.brewId)}
                                             className='btn-block btn-info'
-                                            onClick={() => handleSaveBrew(brew.id)}>
-                                            {savedBrewIds?.some((savedBrewId) => savedBrewId === brew.id)
+                                            onClick={() => handleSaveBrew(brew.brewId)}>
+                                            {savedBrewIds?.some((savedBrewId) => savedBrewId === brew.brewId)
                                                 ? 'This brewery has been saved!'
                                                 : 'Save this brewery!'}
                                         </Button>

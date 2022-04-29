@@ -1,8 +1,7 @@
 import React from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 
-import ThoughtForm from '../components/ThoughtForm';
-import ThoughtList from '../components/ThoughtList';
+import ProfileBrewList from '../components/ProfileBrewList';
 import FriendList from '../components/FriendList';
 
 import { useQuery, useMutation } from '@apollo/client';
@@ -64,9 +63,9 @@ const Profile = (props) => {
 
       <div className="flex-row justify-space-between mb-3">
         <div className="col-12 mb-3 col-lg-8">
-          <ThoughtList
-            thoughts={user.thoughts}
-            title={`${user.username}'s thoughts...`}
+          <ProfileBrewList
+            breweries={user.breweries}
+            title={`${user.username}'s Favorite Breweries`}
           />
         </div>
 
@@ -78,7 +77,6 @@ const Profile = (props) => {
           />
         </div>
       </div>
-      <div className="mb-3">{!userParam && <ThoughtForm />}</div>
     </div>
   );
 };

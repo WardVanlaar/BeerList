@@ -66,18 +66,18 @@ export const REMOVE_FRIEND = gql`
   }
 `;
 
-export const SAVE_BREWERY = gql`
-    mutation saveBrewery($input: brewInput!) {
-        saveBrewery(input: $input) {
+export const ADD_BREWERY = gql`
+    mutation addBrewery($input: brewInput!) {
+        addBrewery(input: $input) {
             _id
             username
             email
-            savedBreweries {
-                id
-                name
-                type
+            breweries {
+                brewId
                 city
+                name
                 state
+                type
                 web
             }
         }
@@ -86,18 +86,13 @@ export const SAVE_BREWERY = gql`
 
 // mutation to remove breweries
 export const REMOVE_BREWERY = gql`
-    mutation removeBrewery($breweryId: String!) {
-        removeBrewery(breweryId: $breweryId) {
+    mutation removeBrewery($brewId: String!) {
+        removeBrewery(brewId: $brewId) {
             _id
             username
             email
-            savedBreweries {
-              id
-              name
-              type
-              city
-              state
-              web
+            breweries {
+              brewId
             }
         }
     }

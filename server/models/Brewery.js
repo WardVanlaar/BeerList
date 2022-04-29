@@ -1,24 +1,29 @@
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
-const dateFormat = require('../utils/dateFormat');
 
 const brewerySchema = new Schema(
   {
     brewId: {
       type: String,
       required: true,
+      unique: true,
     },
     name: {
-      type: String
+      type: String,
+      required: true,
+      unique: true,
     },
     type: {
-      type: String
+      type: String,
+      required: true,
     },
     city: {
-      type: String
+      type: String,
+      required: true,
     },
     state: {
-      type: String
+      type: String,
+      required: true,
     },
     web: {
       type: String

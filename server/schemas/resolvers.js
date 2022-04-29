@@ -60,27 +60,32 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    addBrewery: async (parent, args, context) => {
+    addBrewery: async (parent, { input }, context) => {
       if (context.user) {
-        console.log('arguments below')
-        console.log(...args);
-        const brewery = await brewerySchema.create({ ...args, username: context.user.username });
-
-        await User.findByIdAndUpdate(
+        const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { breweries: brewery._id } },
+          { $addToSet: { breweries: input } },
           { new: true }
         );
-
-        return brewerySchema;
+        return updatedUser;
       }
-
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError('You need to be logged in!')
     },
-    addReaction: async (parent, { breweryId, reactionBody }, context) => {
+    removeBrewery: async (parent, args, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { breweries: { brewId: args.brewId } } },
+          { new: true }
+        );
+        return updatedUser;
+      }
+      throw new AuthenticationError('You need to be logged in!')
+    },
+    addReaction: async (parent, { brewId, reactionBody }, context) => {
       if (context.user) {
         const updatedBrewery = await brewerySchema.findOneAndUpdate(
-          { _id: BreweryId },
+          { _id: brewId },
           { $push: { reactions: { reactionBody, username: context.user.username } } },
           { new: true, runValidators: true }
         );

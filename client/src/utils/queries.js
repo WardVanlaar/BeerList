@@ -43,10 +43,13 @@ export const QUERY_USER = gql`
         _id
         username
       }
-      thoughts {
-        _id
-        thoughtText
-        createdAt
+      breweries {
+        brewId
+        city
+        name
+        state
+        type
+        web
         reactionCount
       }
     }
@@ -60,10 +63,13 @@ export const QUERY_ME = gql`
       username
       email
       friendCount
-      thoughts {
-        _id
-        thoughtText
-        createdAt
+      breweries {
+        brewId
+        city
+        name
+        state
+        type
+        web
         reactionCount
         reactions {
           _id

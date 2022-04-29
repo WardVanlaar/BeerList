@@ -11,8 +11,12 @@ const typeDefs = gql`
   }
 
   type Brewery {
-    _id: ID
-    username: String
+    brewId: String
+    city: String
+    name: String
+    state: String
+    type: String
+    web: String
     reactionCount: Int
     reactions: [Reaction]
   }
@@ -29,6 +33,15 @@ const typeDefs = gql`
     user: User
   }
 
+  input brewInput {
+    brewId: String
+    city: String
+    name: String
+    state: String
+    type: String
+    web: String
+  }
+
   type Query {
     me: User
     users: [User]
@@ -40,7 +53,8 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    addBrewery(id: String, name: String, type: String, city: String, state: String, web: String ): User
+    addBrewery(input: brewInput): User
+    removeBrewery(brewId: String!): User
     addReaction(breweryId: ID!, reactionBody: String!): Brewery
     addFriend(friendId: ID!): User
   }
