@@ -53,7 +53,14 @@ const BreweryList = ({ breweries }) => {
                           <Card.Text> Brewery Type: {brew.type}</Card.Text>
                           <Card.Text className='h2'> Brewery City: {brew.city}</Card.Text>
                           <Card.Text> Brewery State: {brew.state}</Card.Text>
-                          <a href={brew.web}>Go to Site!</a>
+                          <a href={brew.web}> 
+                              <Card.Text>
+                                {brew.web
+                                  ? 'Go to Brewery Site!'
+                                  : ''
+                                }
+                              </Card.Text>
+                          </a>                                    
                           {Auth.loggedIn() && (
                             <Button
                                 className='btn-block btn-info'

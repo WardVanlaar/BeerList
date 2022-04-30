@@ -121,11 +121,17 @@ const BrewList = () => {
                                 <Card.Body>
                                     <Image width="100%"
                                     src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg" className = "card-img-top" rounded/>
-                                    <Card.Title>Card Title</Card.Title>
+                                    <Card.Title>{brew.name}</Card.Title>
                                     <Card.Text>Brewery Type:  {brew.type}</Card.Text>
                                     <Card.Text className='h2'>Brewery City:  {brew.city}</Card.Text>
                                     <Card.Text>Brewery State:  {brew.state}</Card.Text>
-                                    <Card.Text>Brewery Site:  {brew.web}</Card.Text>                                    
+                                    <a href={brew.web}> 
+                                        <Card.Text>
+                                            {brew.web
+                                                ? 'Go to Brewery Site!'
+                                                : ''}
+                                        </Card.Text>
+                                    </a>                                    
                                     {Auth.loggedIn() && (
                                         <Button
                                             disabled={savedBrewIds?.some((savedBrewId) => savedBrewId === brew.brewId)}
