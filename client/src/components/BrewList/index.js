@@ -47,7 +47,7 @@ const BrewList = () => {
             <Jumbotron fluid className='text-light bg-dark'>
                 {/* Search Bar and Buttons */}
                 <Container>
-                    h1 className='font-link text-center my-2'>Search for breweries In:</h1>
+                    <h1 className='font-link text-center my-2'>Search for breweries In:</h1>
                     <Form className="d-flex text-center" onSubmit={getBreweryData}>
                         <Form.Row>
                             <Col xs={12} md={8}>
