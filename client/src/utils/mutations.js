@@ -25,9 +25,9 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_REACTION = gql`
-  mutation addReaction($thoughtId: ID!, $reactionBody: String!) {
-    addReaction(thoughtId: $thoughtId, reactionBody: $reactionBody) {
-      _id
+  mutation addReaction($brewId: String!, $reactionBody: String!) {
+    addReaction(brewId: $brewId, reactionBody: $reactionBody) {
+      brewId
       reactionCount
       reactions {
         _id

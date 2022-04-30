@@ -22,12 +22,7 @@ const userSchema = new Schema(
       minlength: 5
     },
     breweries: [ brewerySchema ],
-    // friends: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'User'
-    //   }
-    // ],
+   
   },
   {
     toJSON: {
