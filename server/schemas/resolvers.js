@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Thought } = require('../models');
+const { User, brewerySchema } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -8,7 +8,7 @@ const resolvers = {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id })
           .select('-__v -password')
-          .populate('thoughts')
+          .populate('breweries')
           .populate('friends');
 
         return userData;
@@ -19,21 +19,21 @@ const resolvers = {
     users: async () => {
       return User.find()
         .select('-__v -password')
-        .populate('thoughts')
+        .populate('breweries')
         .populate('friends');
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
         .select('-__v -password')
         .populate('friends')
-        .populate('thoughts');
+        .populate('breweries');
     },
-    thoughts: async (parent, { username }) => {
+    breweries: async (parent, { username }) => {
       const params = username ? { username } : {};
-      return Thought.find(params).sort({ createdAt: -1 });
+      return brewerySchema.find(params).sort({ createdAt: -1 });
     },
-    thought: async (parent, { _id }) => {
-      return Thought.findOne({ _id });
+    brewery: async (parent, { _id }) => {
+      return brewerySchema.findOne({ _id });
     }
   },
 
@@ -60,30 +60,37 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    addThought: async (parent, args, context) => {
+    addBrewery: async (parent, { input }, context) => {
       if (context.user) {
-        const thought = await Thought.create({ ...args, username: context.user.username });
-
-        await User.findByIdAndUpdate(
+        const updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: { thoughts: thought._id } },
+          { $addToSet: { breweries: input } },
           { new: true }
         );
-
-        return thought;
+        return updatedUser;
       }
-
-      throw new AuthenticationError('You need to be logged in!');
+      throw new AuthenticationError('You need to be logged in!')
     },
-    addReaction: async (parent, { thoughtId, reactionBody }, context) => {
+    removeBrewery: async (parent, args, context) => {
       if (context.user) {
-        const updatedThought = await Thought.findOneAndUpdate(
-          { _id: thoughtId },
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { breweries: { brewId: args.brewId } } },
+          { new: true }
+        );
+        return updatedUser;
+      }
+      throw new AuthenticationError('You need to be logged in!')
+    },
+    addReaction: async (parent, { brewId, reactionBody }, context) => {
+      if (context.user) {
+        const updatedBrewery = await brewerySchema.findOneAndUpdate(
+          { _id: brewId },
           { $push: { reactions: { reactionBody, username: context.user.username } } },
           { new: true, runValidators: true }
         );
 
-        return updatedThought;
+        return updatedBrewery;
       }
 
       throw new AuthenticationError('You need to be logged in!');

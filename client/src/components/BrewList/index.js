@@ -6,15 +6,24 @@ import { useMutation } from '@apollo/react-hooks'
 // Import needed Utils
 import { fetchBreweries } from '../../utils/API';
 import { saveBrewIds, getSavedBrewIds } from '../../utils/localStorage';
+import { ADD_BREWERY } from '../../utils/mutations';
+import Auth from '../../utils/auth'
 
-// CHANGE THIS OUT FOR MUTATION 
-const SAVE_BREW = console.log(' Save Brewery Mutation ')
 
 const BrewList = () => {
     // Set State to pass props for data population and card creation
     const [ breweryState, setBreweryState ] = useState([]);
     // create state for holding our search field data
     const [searchInput, setSearchInput] = useState('');
+
+    // Save Brewery to User functionality
+    const [savedBrewIds, setSavedBrewIds] = useState(getSavedBrewIds());
+    // add brewery to user through mutation
+    const [saveBrew, { error }] = useMutation(ADD_BREWERY);
+
+    useEffect(() => {
+        return () => saveBrewIds(savedBrewIds);
+    });
     
     // Get All Breweries
     const getBreweryData = async (event) => {
@@ -26,7 +35,7 @@ const BrewList = () => {
             // query logic based on search input in utils/API
             const breweries = await fetchBreweries(searchInput);
             const breweryData = breweries.map((brew) => ({
-                id: brew.id,
+                brewId: brew.id,
                 name: brew.name,
                 type: brew.brewery_type,
                 city: brew.city,
@@ -38,6 +47,31 @@ const BrewList = () => {
             setBreweryState(breweryData);
         }catch (err) {
             console.error(err)
+        }
+    }
+
+    const handleSaveBrew = async (brewId) => {
+        const brewInput = breweryState.find((brew) => brew.brewId === brewId);
+
+        // get User Auth Token
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+        if (!token) {
+            return false;
+        }
+
+        try {
+            // save book id to state to change the save button
+            setSavedBrewIds([...savedBrewIds, brewInput.brewId])
+            // Mutation, add Brewery to User
+            const { data } = await saveBrew({
+                variables: { input: brewInput }
+            });
+
+            if (error) {
+                throw new Error('something went wrong!');
+              }
+        } catch (err) {
+            console.error(err);
         }
     }
 
@@ -83,22 +117,25 @@ const BrewList = () => {
                 <Row>
                     {breweryState.map((brew) => {
                         return (
-                            <Col>
-                                <Card key={brew.id} className="text-center" >
-                                    <Card.Body>
-                                        <Image
-                                        src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg"
-                                        rounded/>                                      
-                                        <Card.Title>Card Title</Card.Title>
-                                        <Card.Text>Brewery Type:  {brew.type}</Card.Text>
-                                        <Card.Text className='h2'>Brewery City:  {brew.city}</Card.Text>
-                                        <Card.Text>Brewery State:  {brew.state}</Card.Text>
-                                        <Card.Text>Brewery Site:  {brew.web}</Card.Text>
-                                        <Button variant="primary">Go somewhere</Button>
-                                    </Card.Body>
-                                </Card>   
-                            </Col>
-
+                            <Card key={brew.brewId} id={brew.brewId} border='dark'>
+                                <Card.Body>
+                                    <Card.Title>{brew.name}</Card.Title>
+                                    <Card.Text>{brew.type}</Card.Text>
+                                    <Card.Text>{brew.city}</Card.Text>
+                                    <Card.Text>{brew.state}</Card.Text>
+                                    <Card.Text>{brew.web}</Card.Text>
+                                    {Auth.loggedIn() && (
+                                        <Button
+                                            disabled={savedBrewIds?.some((savedBrewId) => savedBrewId === brew.brewId)}
+                                            className='btn-block btn-info'
+                                            onClick={() => handleSaveBrew(brew.brewId)}>
+                                            {savedBrewIds?.some((savedBrewId) => savedBrewId === brew.brewId)
+                                                ? 'This brewery has been saved!'
+                                                : 'Save this brewery!'}
+                                        </Button>
+                                    )}
+                                </Card.Body>
+                            </Card>
                         );
                     })}
                 </Row>
