@@ -89,3 +89,14 @@ export const QUERY_ME_BASIC = gql`
     }
   }
 `;
+
+export const QUERY_REACTION = gql`
+  query reaction($id: ID!) {
+    reaction(_id: $id) {
+      _id
+      reactionBody
+      createdAt
+      brewId
+    }
+  }
+`;

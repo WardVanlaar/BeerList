@@ -96,17 +96,17 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
 
-    removeReaction: async (parent, args, context) => {
-      if (context.user) {
-        const updatedBrewery = await brewerySchema.findOneAndUpdate(
-          { _id: brewId },
-          { $pull: { reactions: { reactionId: args.reactionId } } },
-          { new: true }
-        );
-        return updatedBrewery;
-      }
-      throw new AuthenticationError('You need to be logged in!')
-    },
+    // removeReaction: async (parent, args, context) => {
+    //   if (context.user) {
+    //     const updatedBrewery = await brewerySchema.findOneAndUpdate(
+    //       { _id: brewId },
+    //       { $pull: { reactions: { reactionId: args.reactionId } } },
+    //       { new: true }
+    //     );
+    //     return updatedBrewery;
+    //   }
+    //   throw new AuthenticationError('You need to be logged in!')
+    // },
 
 
     // addFriend: async (parent, { friendId }, context) => {

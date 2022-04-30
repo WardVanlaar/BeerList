@@ -7,6 +7,7 @@ const ReactionForm = ({ thoughtId }) => {
   const [reactionBody, setBody] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
   const [addReaction, { error }] = useMutation(ADD_REACTION);
+  // const [removeReaction, { error }] = useMutation(REMOVE_REACTION);
 
   // update state based on form input changes
   const handleChange = (event) => {
