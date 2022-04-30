@@ -5,6 +5,7 @@
   "proxy": "http://localhost:3001/",
   "dependencies": {
     "@apollo/client": "^3.3.16",
+    "@apollo/react-hooks": "^4.0.0",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@react-icons/all-files": "^4.1.0",
     "@testing-library/jest-dom": "^5.11.4",
