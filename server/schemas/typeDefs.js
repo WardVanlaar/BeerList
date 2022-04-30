@@ -5,9 +5,9 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
-    friendCount: Int
+    
     breweries: [Brewery]
-    friends: [User]
+
   }
 
   type Brewery {
@@ -56,7 +56,7 @@ const typeDefs = gql`
     addBrewery(input: brewInput): User
     removeBrewery(brewId: String!): User
     addReaction(breweryId: ID!, reactionBody: String!): Brewery
-    addFriend(friendId: ID!): User
+  
   }
 `;
 
