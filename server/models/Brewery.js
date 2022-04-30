@@ -28,7 +28,13 @@ const brewerySchema = new Schema(
     web: {
       type: String
     },
-    reactions: [reactionSchema]
+    reactions: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Reaction'
+      }
+    ],
+    // reactions: [reactionSchema]
   },
   {
     toJSON: {

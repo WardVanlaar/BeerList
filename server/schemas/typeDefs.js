@@ -56,7 +56,7 @@ const typeDefs = gql`
     addBrewery(input: brewInput): User
     removeBrewery(brewId: String!): User
     addReaction(breweryId: ID!, reactionBody: String!): Brewery
-  
+    removeReaction(breweryId: ID!, reactionBody: String!): Brewery
   }
 `;
 
