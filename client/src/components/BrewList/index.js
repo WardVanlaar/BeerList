@@ -119,11 +119,13 @@ const BrewList = () => {
                         return (
                             <Card key={brew.brewId} id={brew.brewId} border='dark'>
                                 <Card.Body>
-                                    <Card.Title>{brew.name}</Card.Title>
-                                    <Card.Text>{brew.type}</Card.Text>
-                                    <Card.Text>{brew.city}</Card.Text>
-                                    <Card.Text>{brew.state}</Card.Text>
-                                    <Card.Text>{brew.web}</Card.Text>
+                                    <Image width="100%"
+                                    src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg" className = "card-img-top" rounded/>
+                                    <Card.Title>Card Title</Card.Title>
+                                    <Card.Text>Brewery Type:  {brew.type}</Card.Text>
+                                    <Card.Text className='h2'>Brewery City:  {brew.city}</Card.Text>
+                                    <Card.Text>Brewery State:  {brew.state}</Card.Text>
+                                    <Card.Text>Brewery Site:  {brew.web}</Card.Text>                                    
                                     {Auth.loggedIn() && (
                                         <Button
                                             disabled={savedBrewIds?.some((savedBrewId) => savedBrewId === brew.brewId)}
