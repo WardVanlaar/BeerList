@@ -1,10 +1,10 @@
 :root {
   --primary: #497573;
-  --secondary: #99f7f2;
+  --secondary: #FF0000;
   --tertiary: #b2c2c1;
   --quatrinary: #cadbda;
-  --light: #e1f5f4;
-  --dark: #6c7575;
+  --light: #f5e3e1;
+  --dark: #000000;
   --error: rgb(228, 46, 1);
   --border-radius: 0.3rem;
   --spacing-one: calc(1rem * 0.25);
@@ -105,6 +105,11 @@ nav a:hover {
   width: 100%;
   margin: 0;
   font-size: 2.5rem;
+}
+
+.font-link {
+  font-family: 'Open Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .btn,

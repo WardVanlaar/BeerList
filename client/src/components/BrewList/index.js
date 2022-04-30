@@ -1,13 +1,20 @@
 // Import React and Bootstrap
-import React, { useState } from 'react';
-import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Jumbotron, Container, Col, Form, Button, Card, FormControl, CardGroup, Row, InputGroup, Image } from 'react-bootstrap';
+import { useMutation } from '@apollo/react-hooks'
 
-// Import API Queries from utils to get data
+// Import needed Utils
 import { fetchBreweries } from '../../utils/API';
+import { saveBrewIds, getSavedBrewIds } from '../../utils/localStorage';
+
+// CHANGE THIS OUT FOR MUTATION 
+const SAVE_BREW = console.log(' Save Brewery Mutation ')
 
 const BrewList = () => {
     // Set State to pass props for data population and card creation
     const [ breweryState, setBreweryState ] = useState([]);
+    // create state for holding our search field data
+    const [searchInput, setSearchInput] = useState('');
     
     // Get All Breweries
     const getBreweryData = async (event) => {
@@ -16,7 +23,8 @@ const BrewList = () => {
 
         try {
             // send request, get response, format data for card creation
-            const breweries = await fetchBreweries();
+            // query logic based on search input in utils/API
+            const breweries = await fetchBreweries(searchInput);
             const breweryData = breweries.map((brew) => ({
                 id: brew.id,
                 name: brew.name,
@@ -39,13 +47,23 @@ const BrewList = () => {
             <Jumbotron fluid className='text-light bg-dark'>
                 {/* Search Bar and Buttons */}
                 <Container>
-                    <h1>Search for breweries!</h1>
-                    <Form onSubmit={getBreweryData}>
+                    <h1 className='font-link text-center my-2'>Search for breweries In:</h1>
+                    <Form className="d-flex text-center" onSubmit={getBreweryData}>
                         <Form.Row>
+                            <Col xs={12} md={8}>
+                                <Form.Control
+                                name='searchInput'
+                                value={searchInput}
+                                onChange={(e) => setSearchInput(e.target.value)}
+                                type='search'
+                                size='lg'
+                                placeholder='Search for breweries'
+                                className="me-2"
+                                aria-label="Search"
+                                />
+                            </Col>
                             <Col xs={12} md={4}>
-                                <Button type='submit' variant='success' size='lg'>
-                                    Submit Search
-                                </Button>
+                                <Button type='submit' variant='outline-success'>Search</Button>
                             </Col>
                         </Form.Row>
                     </Form>
@@ -54,27 +72,36 @@ const BrewList = () => {
 
             {/* Card Holder */}
             <Container>
-                <h2>
+                <h2 className='my-5 text-center'>
                     {breweryState.length
-                        ? `Viewing ${breweryState.length} results:`
-                        : 'Search for a book to begin'}
+                        ? `Viewing ${breweryState.length} Breweries
+                        :`
+                        : 'Search for a place to begin'}
                 </h2>
-                <CardColumns>
+
                     {/* Create a card for each brewery */}
+                <Row>
                     {breweryState.map((brew) => {
                         return (
-                            <Card key={brew.id} border='dark'>
-                                <Card.Body>
-                                    <Card.Title>{brew.name}</Card.Title>
-                                    <Card.Text>{brew.type}</Card.Text>
-                                    <Card.Text>{brew.city}</Card.Text>
-                                    <Card.Text>{brew.state}</Card.Text>
-                                    <Card.Text>{brew.web}</Card.Text>
-                                </Card.Body>
-                            </Card>
+                            <Col>
+                                <Card key={brew.id} className="text-center" >
+                                    <Card.Body>
+                                        <Image
+                                        src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg"
+                                        rounded/>                                      
+                                        <Card.Title>Card Title</Card.Title>
+                                        <Card.Text>Brewery Type:  {brew.type}</Card.Text>
+                                        <Card.Text className='h2'>Brewery City:  {brew.city}</Card.Text>
+                                        <Card.Text>Brewery State:  {brew.state}</Card.Text>
+                                        <Card.Text>Brewery Site:  {brew.web}</Card.Text>
+                                        <Button variant="primary">Go somewhere</Button>
+                                    </Card.Body>
+                                </Card>   
+                            </Col>
+
                         );
                     })}
-                </CardColumns>
+                </Row>
             </Container>
         </>
     )
