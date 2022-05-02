@@ -18,6 +18,12 @@ import SingleThought from './pages/SingleThought';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
 
+
+import Success from './pages/Success';
+import Cancel from './pages/Cancel'
+import Checkout from './pages/Checkout';
+
+
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
@@ -50,6 +56,11 @@ function App() {
               <Route exact path="/signup" component={Signup} />
               <Route exact path="/profile/:username?" component={Profile} />
               <Route exact path="/thought/:id" component={SingleThought} />
+
+              <Route exact path='/Success'  component={Success}/>
+              <Route exact path ='/checkout' component={Checkout}/>
+              <Route exact path='/Cancel' component={Cancel}/>
+
 
               <Route component={NoMatch} />
             </Switch>
