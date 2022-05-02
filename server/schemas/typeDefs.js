@@ -5,16 +5,18 @@ const typeDefs = gql`
     _id: ID
     username: String
     email: String
-    friendCount: Int
-    thoughts: [Thought]
-    friends: [User]
+    
+    breweries: [Brewery]
+
   }
 
-  type Thought {
-    _id: ID
-    thoughtText: String
-    createdAt: String
-    username: String
+  type Brewery {
+    brewId: String
+    city: String
+    name: String
+    state: String
+    type: String
+    web: String
     reactionCount: Int
     reactions: [Reaction]
   }
@@ -31,20 +33,30 @@ const typeDefs = gql`
     user: User
   }
 
+  input brewInput {
+    brewId: String
+    city: String
+    name: String
+    state: String
+    type: String
+    web: String
+  }
+
   type Query {
     me: User
     users: [User]
     user(username: String!): User
-    thoughts(username: String): [Thought]
-    thought(_id: ID!): Thought
+    breweries(username: String): [Brewery]
+    brewery(_id: ID!): Brewery
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    addThought(thoughtText: String!): Thought
-    addReaction(thoughtId: ID!, reactionBody: String!): Thought
-    addFriend(friendId: ID!): User
+    addBrewery(input: brewInput): User
+    removeBrewery(brewId: String!): User
+    addReaction(breweryId: ID!, reactionBody: String!): Brewery
+  
   }
 `;
 

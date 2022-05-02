@@ -24,21 +24,6 @@ export const ADD_USER = gql`
   }
 `;
 
-export const ADD_THOUGHT = gql`
-  mutation addThought($thoughtText: String!) {
-    addThought(thoughtText: $thoughtText) {
-      _id
-      thoughtText
-      createdAt
-      username
-      reactionCount
-      reactions {
-        _id
-      }
-    }
-  }
-`;
-
 export const ADD_REACTION = gql`
   mutation addReaction($thoughtId: ID!, $reactionBody: String!) {
     addReaction(thoughtId: $thoughtId, reactionBody: $reactionBody) {
@@ -54,29 +39,61 @@ export const ADD_REACTION = gql`
   }
 `;
 
-export const ADD_FRIEND = gql`
-  mutation addFriend($id: ID!) {
-    addFriend(friendId: $id) {
-      _id
-      username
-      friendCount
-      friends {
-        _id
-        username
-      }
+// export const ADD_FRIEND = gql`
+//   mutation addFriend($id: ID!) {
+//     addFriend(friendId: $id) {
+//       _id
+//       username
+//       friendCount
+//       friends {
+//         _id
+//         username
+//       }
+//     }
+//   }
+// `;
+
+// export const REMOVE_FRIEND = gql`
+//   mutation removeFriend($id: ID!) {
+//     removeFriend(id: $id) {
+//       _id
+//       username
+//       friends {
+//         _id
+//         username
+//       }
+//     }
+//   }
+// `;
+
+export const ADD_BREWERY = gql`
+    mutation addBrewery($input: brewInput!) {
+        addBrewery(input: $input) {
+            _id
+            username
+            email
+            breweries {
+                brewId
+                city
+                name
+                state
+                type
+                web
+            }
+        }
     }
-  }
 `;
 
-export const REMOVE_FRIEND = gql`
-  mutation removeFriend($id: ID!) {
-    removeFriend(id: $id) {
-      _id
-      username
-      friends {
-        _id
-        username
-      }
+// mutation to remove breweries
+export const REMOVE_BREWERY = gql`
+    mutation removeBrewery($brewId: String!) {
+        removeBrewery(brewId: $brewId) {
+            _id
+            username
+            email
+            breweries {
+              brewId
+            }
+        }
     }
-  }
 `;

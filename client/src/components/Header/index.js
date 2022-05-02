@@ -13,7 +13,7 @@ const Header = () => {
     <header className="bg-secondary mb-4 py-2 flex-row align-center">
       <div className="container flex-row justify-space-between-lg justify-center align-center">
         <Link to="/">
-          <h1>Deep Thoughts</h1>
+          <h1>BrewList</h1>
         </Link>
 
         <nav className="text-center">
@@ -28,10 +28,12 @@ const Header = () => {
             <>
               <Link to="/login">Login</Link>
               <Link to="/signup">Signup</Link>
+              <Link to="/checkout">Donate to BrewList</Link>
             </>
           )}
         </nav>
       </div>
+      
     </header>
   );
 };
