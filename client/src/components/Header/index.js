@@ -28,10 +28,12 @@ const Header = () => {
             <>
               <Link to="/login">Login</Link>
               <Link to="/signup">Signup</Link>
+              <Link to="/checkout">Donate to BrewList</Link>
             </>
           )}
         </nav>
       </div>
+      
     </header>
   );
 };

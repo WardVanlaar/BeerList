@@ -73,6 +73,7 @@ const BreweryList = ({ breweries }) => {
               );
           })}
       </CardColumns>
+      
   </Container>
   );
 };
