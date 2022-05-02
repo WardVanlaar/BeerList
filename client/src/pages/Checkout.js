@@ -71,8 +71,9 @@ const checkoutpage={
 <div style={checkoutpage}>
 <label>Enter amount to donate</label>
 <input onChange={numberHandle} style={reginput} type="number" placeholder="Enter Number" value={number} />
+   
     <StripeCheckout
-    stripeKey={process.env.REACT_APP_KEY}
+    stripeKey='pk_test_51KuLapAfg88deh2t8QujBOHlJRqtmI2CTlvuIiCiCg0dzmmqbEZqFMQ7EOyHl3GwbUdCDlSx6vtLdX5yYHLk07Ex00xgp0oAMq'
     token={makePayment}
     name="Donate"
     amount={number * 100}>
