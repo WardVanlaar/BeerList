@@ -15,8 +15,13 @@ This MERN App is a Brewery watchlist, enabling you to create a list of your favo
 Programming languages used:
 * CSS
 * Javascript
-* Node.js
 * JSX
+
+Technologies used:
+* MongoDB
+* Express.js
+* React
+* Node.js
 
 ## Installation
 Clone this repo, run npm install in the terminal, then npm run develop
