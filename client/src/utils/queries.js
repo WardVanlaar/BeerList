@@ -5,13 +5,6 @@ export const QUERY_BREWERIES = gql`
     breweries(username: $username) {
       _id
       username
-      reactionCount
-      reactions {
-        _id
-        createdAt
-        username
-        reactionBody
-      }
     }
   }
 `;
@@ -21,13 +14,6 @@ export const QUERY_BREWERY = gql`
     brewery(_id: $id) {
       _id
       username
-      reactionCount
-      reactions {
-        _id
-        createdAt
-        username
-        reactionBody
-      }
     }
   }
 `;
@@ -38,7 +24,7 @@ export const QUERY_USER = gql`
       _id
       username
       email
-     
+      favBeer
       breweries {
         brewId
         city
@@ -46,7 +32,6 @@ export const QUERY_USER = gql`
         state
         type
         web
-        reactionCount
       }
     }
   }
@@ -58,7 +43,7 @@ export const QUERY_ME = gql`
       _id
       username
       email
-      
+      favBeer
       breweries {
         brewId
         city
@@ -66,13 +51,6 @@ export const QUERY_ME = gql`
         state
         type
         web
-        reactionCount
-        reactions {
-          _id
-          createdAt
-          reactionBody
-          username
-        }
       }
      
     }
@@ -85,7 +63,7 @@ export const QUERY_ME_BASIC = gql`
       _id
       username
       email
-    
+      favBeer
     }
   }
 `;

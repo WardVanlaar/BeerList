@@ -24,47 +24,6 @@ export const ADD_USER = gql`
   }
 `;
 
-export const ADD_REACTION = gql`
-  mutation addReaction($thoughtId: ID!, $reactionBody: String!) {
-    addReaction(thoughtId: $thoughtId, reactionBody: $reactionBody) {
-      _id
-      reactionCount
-      reactions {
-        _id
-        reactionBody
-        createdAt
-        username
-      }
-    }
-  }
-`;
-
-// export const ADD_FRIEND = gql`
-//   mutation addFriend($id: ID!) {
-//     addFriend(friendId: $id) {
-//       _id
-//       username
-//       friendCount
-//       friends {
-//         _id
-//         username
-//       }
-//     }
-//   }
-// `;
-
-// export const REMOVE_FRIEND = gql`
-//   mutation removeFriend($id: ID!) {
-//     removeFriend(id: $id) {
-//       _id
-//       username
-//       friends {
-//         _id
-//         username
-//       }
-//     }
-//   }
-// `;
 
 export const ADD_BREWERY = gql`
     mutation addBrewery($input: brewInput!) {
@@ -72,6 +31,7 @@ export const ADD_BREWERY = gql`
             _id
             username
             email
+            favBeer
             breweries {
                 brewId
                 city
@@ -91,9 +51,21 @@ export const REMOVE_BREWERY = gql`
             _id
             username
             email
+            favBeer
             breweries {
               brewId
             }
         }
+    }
+`;
+
+export const UPDATE_FAVBEER = gql`
+    mutation updateFavBeer($beer: String!) {
+      updateFavBeer(beer: $beer) {
+        _id
+        username
+        favBeer
+        email
+      }
     }
 `;
