@@ -22,6 +22,7 @@ Technologies used:
 * Express.js
 * React
 * Node.js
+* Stripe
 
 ## Installation
 Clone this repo, run npm install in the terminal, then npm run develop
