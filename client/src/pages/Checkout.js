@@ -29,7 +29,7 @@ const checkoutpage={
         border: "2px solid purple",
         borderRadius: "2px",
         textAlign:"center",
-        display: "block",
+        display: "inline",
         fontFamily: "inherit",
         fontSize: "14px",
         padding: "10px" ,
@@ -77,11 +77,9 @@ const checkoutpage={
     token={makePayment}
     name="Donate"
     amount={number * 100}>
-
-   <button  className='btn-large '>
-      Donate {number} $
+   <button  className='btn-large'>
+      Donate{number}$
     </button>
-    
   </StripeCheckout>
   </div>
   </>

@@ -117,7 +117,7 @@ const BrewList = () => {
                 <Row>
                     {breweryState.map((brew) => {
                         return (
-                            <Card key={brew.brewId} id={brew.brewId} border='dark'>
+                            <Card key={brew.brewId} id={brew.brewId} border='dark'className="text-center">
                                 <Card.Body>
                                     <Image width="100%"
                                     src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg" className = "card-img-top" rounded/>

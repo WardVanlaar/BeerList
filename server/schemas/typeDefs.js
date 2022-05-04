@@ -3,11 +3,10 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
   type User {
     _id: ID
+    favBeer: String
     username: String
     email: String
-    
     breweries: [Brewery]
-
   }
 
   type Brewery {
@@ -17,15 +16,6 @@ const typeDefs = gql`
     state: String
     type: String
     web: String
-    reactionCount: Int
-    reactions: [Reaction]
-  }
-
-  type Reaction {
-    _id: ID
-    reactionBody: String
-    createdAt: String
-    username: String
   }
 
   type Auth {
@@ -55,8 +45,7 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     addBrewery(input: brewInput): User
     removeBrewery(brewId: String!): User
-    addReaction(breweryId: ID!, reactionBody: String!): Brewery
-  
+    updateFavBeer(beer: String!): User  
   }
 `;
 

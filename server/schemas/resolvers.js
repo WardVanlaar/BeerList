@@ -9,8 +9,6 @@ const resolvers = {
         const userData = await User.findOne({ _id: context.user._id })
           .select('-__v -password')
           .populate('breweries')
-          // .populate('friends');
-
         return userData;
       }
 
@@ -20,12 +18,10 @@ const resolvers = {
       return User.find()
         .select('-__v -password')
         .populate('breweries')
-        // .populate('friends');
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
         .select('-__v -password')
-        // .populate('friends')
         .populate('breweries');
     },
     breweries: async (parent, { username }) => {
@@ -82,32 +78,16 @@ const resolvers = {
       }
       throw new AuthenticationError('You need to be logged in!')
     },
-    addReaction: async (parent, { brewId, reactionBody }, context) => {
+    updateFavBeer: async (parent, args, context) => {
       if (context.user) {
-        const updatedBrewery = await brewerySchema.findOneAndUpdate(
-          { _id: brewId },
-          { $push: { reactions: { reactionBody, username: context.user.username } } },
-          { new: true, runValidators: true }
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $set: { favBeer: args.beer  } },
+          { new: true }
         );
-
-        return updatedBrewery;
+        return updatedUser;
       }
-
-      throw new AuthenticationError('You need to be logged in!');
-    },
-    // addFriend: async (parent, { friendId }, context) => {
-    //   if (context.user) {
-    //     const updatedUser = await User.findOneAndUpdate(
-    //       { _id: context.user._id },
-    //       { $addToSet: { friends: friendId } },
-    //       { new: true }
-    //     ).populate('friends');
-
-    //     return updatedUser;
-    //   }
-
-    //   throw new AuthenticationError('You need to be logged in!');
-    // }
+    }
   }
 };
 
