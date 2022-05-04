@@ -1,11 +1,11 @@
-import { React, useState, setState } from 'react';
-import { Redirect, useParams } from 'react-router-dom';
-import ProfileBrewList from '../components/ProfileBrewList';
-import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
-import Auth from '../utils/auth';
-import { Dropdown, DropdownButton } from 'react-bootstrap'
-import { UPDATE_FAVBEER } from '../utils/mutations';
+import { React, useState, setState } from "react";
+import { Redirect, useParams } from "react-router-dom";
+import ProfileBrewList from "../components/ProfileBrewList";
+import { useQuery, useMutation } from "@apollo/client";
+import { QUERY_USER, QUERY_ME } from "../utils/queries";
+import Auth from "../utils/auth";
+import { Dropdown, DropdownButton } from "react-bootstrap";
+import { UPDATE_FAVBEER } from "../utils/mutations";
 
 const Profile = (props) => {
   const { username: userParam } = useParams();
@@ -14,7 +14,7 @@ const Profile = (props) => {
     variables: { username: userParam },
   });
 
-  const [favBeer, setFavBeer] = useState('Click Me');
+  const [favBeer, setFavBeer] = useState("Click Me");
   const [updateFavBeer, { error }] = useMutation(UPDATE_FAVBEER);
 
   const user = data?.me || data?.user || {};
@@ -24,17 +24,17 @@ const Profile = (props) => {
       // save book id to state to change the save button
       setFavBeer(beer);
       // Mutation, add Brewery to User
-      const { data } =  updateFavBeer({
-          variables: { beer }
+      const { data } = updateFavBeer({
+        variables: { beer },
       });
 
       if (error) {
-          throw new Error('something went wrong!');
-        }
+        throw new Error("something went wrong!");
+      }
     } catch (err) {
-        console.error(err);
+      console.error(err);
     }
-  }
+  };
 
   // redirect to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
@@ -59,13 +59,18 @@ const Profile = (props) => {
         <h2 className="bg-dark text-secondary p-3 display-inline-block text-center">
           Your Favorite Beer: {user.favBeer}
         </h2>
-        <DropdownButton onSelect={handleSelect} alignRight title={favBeer } id="dropdown-menu-align-right">
+        <DropdownButton
+          onSelect={handleSelect}
+          alignRight
+          title={favBeer}
+          id="dropdown-menu-align-right"
+          className="menu"
+        >
           <Dropdown.Item eventKey="Ale">Ale</Dropdown.Item>
           <Dropdown.Item eventKey="IPA">IPA</Dropdown.Item>
           <Dropdown.Item eventKey="Stout">Stout</Dropdown.Item>
         </DropdownButton>
       </div>
-      
 
       <div className="">
         <div className="col-12 mb-3 col-lg-8 flex-row justify-space-between mb-3">
