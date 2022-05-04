@@ -55,7 +55,7 @@ const Profile = (props) => {
   }
   return (
     <div className="text-center">
-      <div className="flex-row mb-3">
+      <div className="text-center my-5">
         <h2 className="bg-dark text-secondary p-3 display-inline-block text-center">
           Your Favorite Beer: {user.favBeer}
         </h2>
@@ -67,8 +67,8 @@ const Profile = (props) => {
       </div>
       
 
-      <div className="flex-row justify-space-between mb-3">
-        <div className="col-12 mb-3 col-lg-8">
+      <div className="">
+        <div className="col-12 mb-3 col-lg-8 flex-row justify-space-between mb-3">
           <ProfileBrewList
             breweries={user.breweries}
             title={`${user.username}'s Favorite Breweries`}
