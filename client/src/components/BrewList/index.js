@@ -78,10 +78,10 @@ const BrewList = () => {
     // Return Component
     return (
         <>
-            <Jumbotron fluid className='text-light bg-dark'>
+            <Jumbotron fluid className='search-bar'>
                 {/* Search Bar and Buttons */}
                 <Container>
-                    <h1 className='font-link text-center my-2'>Search for breweries In:</h1>
+                    <h1 className='search-title'>Search for Breweries!</h1>
                     <Form className="d-flex text-center" onSubmit={getBreweryData}>
                         <Form.Row>
                             <Col xs={12} md={8}>
@@ -91,13 +91,13 @@ const BrewList = () => {
                                 onChange={(e) => setSearchInput(e.target.value)}
                                 type='search'
                                 size='lg'
-                                placeholder='Search for breweries'
-                                className="me-2"
+                                placeholder='Search for Breweries'
+                                className="me-2 search-form"
                                 aria-label="Search"
                                 />
                             </Col>
                             <Col xs={12} md={4}>
-                                <Button type='submit' variant='outline-success'>Search</Button>
+                                <Button className='search-button' type='submit' variant='outline-success'>Search</Button>
                             </Col>
                         </Form.Row>
                     </Form>
@@ -110,18 +110,18 @@ const BrewList = () => {
                     {breweryState.length
                         ? `Viewing ${breweryState.length} Breweries
                         :`
-                        : 'Search for a place to begin'}
+                        : 'No Breweries yet'}
                 </h2>
 
                     {/* Create a card for each brewery */}
-                <Row>
+                <Row className='brewHolder'>
                     {breweryState.map((brew) => {
                         return (
-                            <Card key={brew.brewId} id={brew.brewId} border='dark'className="text-center">
+                            <Card key={brew.brewId} id={brew.brewId} border='dark'className="text-center brewCard">
                                 <Card.Body>
+                                     <Card.Title>{brew.name}</Card.Title>
                                     <Image width="100%"
-                                    src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg" className = "card-img-top" rounded/>
-                                    <Card.Title>{brew.name}</Card.Title>
+                                    src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg" className = "card-img-top brewImg" rounded/>
                                     <Card.Text>Brewery Type:  {brew.type}</Card.Text>
                                     <Card.Text className='h2'>Brewery City:  {brew.city}</Card.Text>
                                     <Card.Text>Brewery State:  {brew.state}</Card.Text>

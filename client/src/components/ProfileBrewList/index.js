@@ -45,11 +45,11 @@ const BreweryList = ({ breweries }) => {
           {/* Create a card for each brewery */}
           {breweries.map((brew) => {
               return (
-                  <Card key={brew.brewId} id={brew.brewId} border='dark'>
+                  <Card key={brew.brewId} id={brew.brewId} className="brewCard">
                       <Card.Body>
-                          <Image width="100%"
-                          src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg" className = "card-img-top" rounded/>
                           <Card.Title>{brew.name}</Card.Title>
+                          <Image width="100%"
+                          src= "https://cdn.craftbeer.com/wp-content/uploads/Argus.jpg" className = "brewImg card-img-top" rounded/>
                           <Card.Text> Brewery Type: {brew.type}</Card.Text>
                           <Card.Text className='h2'> Brewery City: {brew.city}</Card.Text>
                           <Card.Text> Brewery State: {brew.state}</Card.Text>
