@@ -55,16 +55,16 @@ const Profile = (props) => {
   }
   return (
     <div className="text-center">
-      <div className="text-center my-5">
-        <h2 className="bg-dark text-secondary p-3 display-inline-block text-center">
-          Your Favorite Beer: {user.favBeer}
+      <div className="text-center my-5 favBeer">
+        <h2 className="text-secondary p-3 text-center">
+          My Favorite Beer: {user.favBeer}
         </h2>
         <DropdownButton
           onSelect={handleSelect}
           alignRight
-          title={favBeer}
+          title='Edit'
           id="dropdown-menu-align-right"
-          className="menu"
+          className="menu display-inline-block text-center favBeer-dropBtn"
         >
           <Dropdown.Item eventKey="Ale">Ale</Dropdown.Item>
           <Dropdown.Item eventKey="IPA">IPA</Dropdown.Item>
